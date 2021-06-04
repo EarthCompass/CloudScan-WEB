@@ -5,7 +5,7 @@
 
 由于WebRTC的要求，部署必须使用`https`，否则无法调用接口。
 
-自行部署前请删除index.html中的Google Analytics相关JS(已注释)。
+[comment]: <> (自行部署前请删除index.html中的Google Analytics相关JS。)
 
 已集成入[sign-your-horse](https://github.com/naivekun/sign-your-horse)
 
