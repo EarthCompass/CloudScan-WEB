@@ -55,10 +55,13 @@ class Scan extends React.Component {
                 console.log(this.videoDom.current)
                 let videoTrack = stream.getVideoTracks()[0];
                 let zoomOptions = undefined;
-                if (this.state.isChrome && ('zoom' in videoTrack.getCapabilities())){
+                if (this.state.canZoom && ('zoom' in videoTrack.getCapabilities())){
                     let cap = videoTrack.getCapabilities();
+                    this.setState({canZoom:true})
                     zoomOptions = {min:cap.zoom.min,max:cap.zoom.max}
                     // console.log(1)
+                }else{
+                    this.setState({canZoom:false})
                 }
                 let id = setInterval(() => {
                     // console.log(this.state.zoom)
@@ -157,7 +160,8 @@ class Scan extends React.Component {
         this.videoDom = React.createRef();
         this.p = React.createRef();
         let isChrome = navigator.userAgent.includes("Chrome");
-        this.state = {videoSources: [], isChrome: isChrome,zoom:0};
+        let isSafari = navigator.userAgent.includes("Safari");
+        this.state = {videoSources: [], canZoom: isChrome||isSafari,zoom:0};
         this.video = document.createElement("video");
     }
 
@@ -197,7 +201,7 @@ class Scan extends React.Component {
                 <Row>
                     <Col span={22} offset={1}>
                         <Slider min={0}
-                                max={1} step={0.01} defaultValue={0} disabled={!this.state.isChrome}
+                                max={1} step={0.01} defaultValue={0} disabled={!this.state.canZoom}
                                 onChange={this.zoomOnChange}/>
                     </Col>
                 </Row>
