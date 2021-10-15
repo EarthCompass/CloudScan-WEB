@@ -1,6 +1,6 @@
 import React from 'react';
 import jsQR from 'jsqr';
-import {Select, Row, Col, Divider, Typography, message, Slider} from 'antd';
+import {Select, Row, Col, Divider, Typography, message, Slider, Button} from 'antd';
 import Axios from 'axios';
 
 const {scanImageData} = require('zbar.wasm');
@@ -50,7 +50,7 @@ class Scan extends React.Component {
                 this.canvasDom.current.height = 720
                 this.canvasDom.current.width = 720
                 this.video.srcObject = stream
-                this.video.play()
+                this.video.play().catch(e=>{console.log(e);})
                 console.log(this.video)
                 console.log(this.videoDom.current)
                 let videoTrack = stream.getVideoTracks()[0];
@@ -163,6 +163,7 @@ class Scan extends React.Component {
         let isSafari = navigator.userAgent.includes("Safari");
         this.state = {videoSources: [], canZoom: isChrome||isSafari,zoom:0};
         this.video = document.createElement("video");
+        this.video.setAttribute("playsinline",true);
     }
 
     zoomOnChange = value =>{
@@ -203,6 +204,11 @@ class Scan extends React.Component {
                         <Slider min={0}
                                 max={1} step={0.01} defaultValue={0} disabled={!this.state.canZoom}
                                 onChange={this.zoomOnChange}/>
+                    </Col>
+                </Row>
+                <Row justify="center" style={{marginTop:"0.3em"}}>
+                    <Col>
+                        <Button shape="round" type="primary" onClick={()=>{this.video.play()}}>Start</Button>
                     </Col>
                 </Row>
                 <Divider/>
