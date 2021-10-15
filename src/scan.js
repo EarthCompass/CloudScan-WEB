@@ -3,7 +3,7 @@ import jsQR from 'jsqr';
 import {Select, Row, Col, Divider, Typography, message, Slider, Button} from 'antd';
 import Axios from 'axios';
 
-const {scanImageData} = require('zbar.wasm');
+// const {scanImageData} = require('zbar.wasm');
 
 const {Option} = Select;
 const {Title, Paragraph, Text, Link} = Typography;
